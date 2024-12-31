@@ -85,6 +85,7 @@ static void help(int exit_code = 1)
   fprintf(stderr, "  --dm-no-halt-groups   Debug module won't support halt groups\n");
   fprintf(stderr, "  --dm-no-impebreak     Debug module won't support implicit ebreak in program buffer\n");
   fprintf(stderr, "  --blocksz=<size>      Cache block size (B) for CMO operations(powers of 2) [default 64]\n");
+  fprintf(stderr, "  --interleave=<n>      Number of instructions before yielding load reservation [default 50000]\n");
 
   exit(exit_code);
 }
@@ -447,6 +448,7 @@ int main(int argc, char** argv)
                 [&](const char UNUSED *s){log_commits = true;});
   parser.option(0, "log", 1,
                 [&](const char* s){log_path = s;});
+  parser.option(0, "interleave", 1, [&](const char* s){sim_t::INTERLEAVE = atoul_safe(s);});
   FILE *cmd_file = NULL;
   parser.option(0, "debug-cmd", 1, [&](const char* s){
      if ((cmd_file = fopen(s, "r"))==NULL) {

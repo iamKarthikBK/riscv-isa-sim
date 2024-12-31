@@ -30,7 +30,7 @@ static void handle_signal(int sig)
   signal(sig, &handle_signal);
 }
 
-const size_t sim_t::INTERLEAVE;
+size_t sim_t::INTERLEAVE = 50000;
 
 extern device_factory_t* clint_factory;
 extern device_factory_t* plic_factory;
